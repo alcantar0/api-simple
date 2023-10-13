@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-x=1c+f4@f*5=-#s(s-dxrhl!-uo3%gr95u^synusgfhw_ua!9c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["api-simple-kbc3.onrender.com"]
+ALLOWED_HOSTS = ["api-simple-kbc3.onrender.com", "127.0.0.1"]
 
 
 # Application definition
@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     "core",
     "users",
     "rest_framework",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    "whitenoise"
 
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -75,6 +77,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "site_user.wsgi.application"
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -88,7 +92,7 @@ WSGI_APPLICATION = "site_user.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(
                  # pylint: disable=C0301
-        default=os.getenv("postgres://dlftfioz:c91MmlCtu5oB94vimsmGdi3pzFWdfx-I@isabelle.db.elephantsql.com/dlftfioz"),
+        default="postgres://dlftfioz:c91MmlCtu5oB94vimsmGdi3pzFWdfx-I@isabelle.db.elephantsql.com/dlftfioz",
         conn_max_age=600,
         ssl_require=True,
     )
@@ -132,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
     
     queryset = CustomUser.objects.all().order_by('-date_joined')
     serializer_class = CustomUserSerializer
-    authentication_classes = [TokenAuthentication]
+    #authentication_classes = [TokenAuthentication]
     #permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['POST'])
